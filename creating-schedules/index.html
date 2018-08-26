@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="canonical" href="http://fluentscheduler.github.io/creating-schedules/">
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Creating schedules - FluentScheduler</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Creating schedules";
+    var mkdocs_page_input_path = "creating-schedules.md";
+    var mkdocs_page_url = "/creating-schedules/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> FluentScheduler</a>
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Creating schedules</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../starting-and-stopping/">Starting and stopping</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../listening-for-events/">Listening for events</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../reentrancy/">Reentrancy</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../milliseconds-precision/">Milliseconds precision</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../weekly-jobs/">Weekly jobs</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../dependency-injection/">Dependency injection</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../opening-issues/">Opening issues</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../submitting-pull-requests/">Submitting pull requests</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">FluentScheduler</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Creating schedules</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p>The job configuration is handled in a <code>Registry</code> class. A job is either an <code>Action</code> or a class that inherits <code>IJob</code>:</p>
+<pre><code class="cs">using FluentScheduler;
+
+public class MyRegistry : Registry
+{
+    public MyRegistry()
+    {
+        // Schedule an IJob to run at an interval
+        Schedule&lt;MyJob&gt;().ToRunNow().AndEvery(2).Seconds();
+
+        // Schedule an IJob to run once, delayed by a specific time interval
+        Schedule&lt;MyJob&gt;().ToRunOnceIn(5).Seconds();
+
+        // Schedule a simple job to run at a specific time
+        Schedule(() =&gt; Console.WriteLine(&quot;It's 9:15 PM now.&quot;)).ToRunEvery(1).Days().At(21, 15);
+
+        // Schedule a more complex action to run immediately and on an monthly interval
+        Schedule&lt;MyComplexJob&gt;().ToRunNow().AndEvery(1).Months().OnTheFirst(DayOfWeek.Monday).At(3, 0);
+
+        // Schedule a job using a factory method and pass parameters to the constructor.
+        Schedule(() =&gt; new MyComplexJob(&quot;Foo&quot;, DateTime.Now)).ToRunNow().AndEvery(2).Seconds();
+
+        // Schedule multiple jobs to be run in a single schedule
+        Schedule&lt;MyJob&gt;().AndThen&lt;MyOtherJob&gt;().ToRunNow().AndEvery(5).Minutes();
+    }
+}
+</code></pre>
+
+<p>You can also use the <code>Registry</code> class directly (instead of inheriting it):</p>
+<pre><code class="cs">var registry = new Registry();
+registry.Schedule&lt;MyJob&gt;().ToRunNow().AndEvery(2).Seconds();
+registry.Schedule&lt;MyJob&gt;().ToRunOnceIn(5).Seconds();
+registry.Schedule(() =&gt; Console.WriteLine(&quot;It's 9:15 PM now.&quot;)).ToRunEvery(1).Days().At(21, 15);
+registry.Schedule&lt;MyComplexJob&gt;().ToRunNow().AndEvery(1).Months().OnTheFirst(DayOfWeek.Monday).At(3, 0);
+registry.Schedule&lt;MyJob&gt;().AndThen&lt;MyOtherJob&gt;().ToRunNow().AndEvery(5).Minutes();
+</code></pre>
+
+<p>It's also possible to schedule jobs after <a href="../starting-and-stopping/">initialization</a>:</p>
+<pre><code class="cs">JobManager.AddJob(() =&gt; Console.WriteLine(&quot;Late job!&quot;), (s) =&gt; s.ToRunEvery(5).Seconds());
+</code></pre>
+              
+            </div>
+          </div>
+<hr>
+<a href="https://github.com/fluentscheduler/FluentScheduler" class="fa fa-github" style="float: right">&nbsp;GitHub</a>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../starting-and-stopping/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

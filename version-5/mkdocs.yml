@@ -1,0 +1,21 @@
+site_name: FluentScheduler
+site_url: http://fluentscheduler.github.io
+site_description: Automated job scheduler with fluent interface.
+
+plugins: []
+
+nav:
+  - Home: index.md
+  - Creating schedules: creating-schedules.md
+  - Starting and stopping: starting-and-stopping.md
+  - Listening for events: listening-for-events.md
+  - Reentrancy: reentrancy.md
+  - Milliseconds precision: milliseconds-precision.md
+  - Weekly jobs: weekly-jobs.md
+  - Dependency injection: dependency-injection.md
+  - Opening issues: opening-issues.md
+  - Submitting pull requests: submitting-pull-requests.md
+
+theme:
+  name: readthedocs
+  custom_dir: docs/custom

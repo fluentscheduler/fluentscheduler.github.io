@@ -1,0 +1,27 @@
+site_name: FluentScheduler
+site_url: http://fluentscheduler.github.io
+site_description: Automated job scheduler with fluent interface.
+
+plugins: []
+
+nav:
+  - Home: index.md
+  - Creating schedules: creating-schedules.md
+  - Fluent expressions: fluent-expressions.md
+  - Cron expressions: cron-expressions.md
+  - Starting, stopping and resetting: starting-stopping-and-resetting.md
+  - Changing the scheduling: changing-the-scheduling.md
+  - Listening for events: listening-for-events.md
+  - Async schedules: async-schedules.md
+  - Grouping schedules: grouping-schedules.md
+  - Reentrancy: reentrancy.md
+  - UTC time: utc-time.md
+  - Daylight savings: daylight-savings.md
+  - Milliseconds precision: milliseconds-precision.md
+  - Persistence: persistence.md
+  - Opening issues: opening-issues.md
+  - Submitting pull requests: submitting-pull-requests.md
+
+theme:
+  name: readthedocs
+  custom_dir: docs/custom

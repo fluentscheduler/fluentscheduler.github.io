@@ -1,3 +1,6 @@
+<p><strong>Important: this documentation refers to the version 5 of the library which is currently deprecated. Check the current version <a href="https://fluentscheduler.github.io">here</a>.</strong></p>
+<hr>
+
 The job configuration is handled in a `Registry` class. A job is either an `Action` or a class that inherits `IJob`:
 
 ```cs

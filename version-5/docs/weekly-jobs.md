@@ -1,3 +1,6 @@
+<p><strong>Important: this documentation refers to the version 5 of the library which is currently deprecated. Check the current version <a href="https://fluentscheduler.github.io">here</a>.</strong></p>
+<hr>
+
 Let's suppose it's 10:00 of a Monday morning and you want to start a job that runs every Monday at 14:00.
 Should the first run of your job be today or only on the next week Monday?
 

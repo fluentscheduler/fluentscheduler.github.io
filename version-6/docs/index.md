@@ -2,8 +2,6 @@
     <img alt="logo" src="https://raw.githubusercontent.com/fluentscheduler/FluentScheduler/version-6/Logo/logo-200x200.png">
 </p>
 
-**Important note**: This documentation refers to the upcoming version of the library, that's still unstable.
-
 Welcome to the documentation for FluentScheduler, an automated job scheduler with fluent interface for the .NET
 platform.
 

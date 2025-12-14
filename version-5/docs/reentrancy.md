@@ -1,3 +1,6 @@
+<p><strong>Important: this documentation refers to the version 5 of the library which is currently deprecated. Check the current version <a href="https://fluentscheduler.github.io">here</a>.</strong></p>
+<hr>
+
 By default, the library allows a schedule to run in parallel with a previously triggered execution of the same
 schedule.
 

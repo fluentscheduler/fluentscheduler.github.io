@@ -14,7 +14,6 @@ nav:
   - Weekly jobs: weekly-jobs.md
   - Dependency injection: dependency-injection.md
   - Opening issues: opening-issues.md
-  - Submitting pull requests: submitting-pull-requests.md
 
 theme:
   name: readthedocs
